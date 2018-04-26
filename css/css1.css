@@ -1,0 +1,12 @@
+h1 {
+    text-align:center;
+}
+h1.serif{
+    font-family:"Times New Roman",Times,serif;
+}
+/*div  {*/
+    /*background-image: url("../images/starUniverse.jpg");*/
+    /*position:absolute;*/
+    /*width:100%;*/
+    /*height:100%;*/
+/*}*/
