@@ -1,26 +1,242 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>逍遥游的个人博客 - 学无止境</title>
+    <title>逍遥游的个人博客主页</title>
+    <meta name="keywords" content="语言学习,开发实战,黑客与安全,计算机基础,数据库,程序人生" />
+    <meta name="description" content="这是逍遥游的博客主页" />
     <link href="css/styles.css" rel="stylesheet">
+    <link href="css/animation.css" rel="stylesheet">
+    <!-- 返回顶部调用 begin -->
+    <link href="css/lrtk.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/js.js"></script>
+    <!-- 返回顶部调用 end-->
+    <!--[if lt IE 9]>
+    <script src="js/modernizr.js"></script>
+    <![endif]-->
 </head>
 <body>
 <header>
     <nav id="nav">
         <ul>
-            <li><a href="http://xiaoyaoyou.xyz" >网站首页</a></li>
-            <li><a href="#" target="_blank" title="开发语言">开发语言</a></li>
-            <li><a href="#" target="_blank" title="黑客与安全">黑客与安全</a></li>
-            <li><a href="#" target="_blank" title="服务端开发">服务端开发</a></li>
-            <li><a href="#" target="_blank" title="前端开发">前端开发</a></li>
-            <li><a href="#" target="_blank" title="移动端开发">移动端开发</a></li>
-            <li><a href="#" target="_blank" title="数据库">数据库</a></li>
-            <li><a href="#" target="_blank" title="开发工具与开发环境">开发工具与开发环境</a></li>
-            <li><a href="#" target="_blank" title="程序人生">程序人生</a></li>
+            <li><a href="/index.html" >网站首页</a></li>
+            <li><a href="/learnLanguage/" target="_blank" title="语言学习">语言学习</a></li>
+            <li><a href="/Development/" target="_blank" title="开发">开发</a></li>
+            <li><a href="./database/" target="_blank" title="数据库">数据库</a></li>
+            <li><a href="/hackersAndSecurity" target="_blank" title="黑客与安全">黑客与安全</a></li>
+            <li><a href="/computerBasic/" target="_blank" title="计算机基础">计算机基础</a></li>
+            <li><a href="/developmentTool/" target="_blank" title="开发工具及开发环境">开发工具及开发环境</a></li>
+            <li><a href="/programmingLife/" target="_blank" title="程序人生">程序人生</a></li>
         </ul>
         <script src="js/silder.js"></script><!--获取当前页导航 高亮显示标题-->
     </nav>
 </header>
+<!--header end-->
+<div id="mainbody">
+    <div class="info">
+        <figure> <img src="images/art.jpg"  alt="Panama Hat">
+            <figcaption><strong>黑客道德准则</strong>通往电脑的路不止一条
+                所有的信息都应是免费的
+                打破电脑权限
+                在电脑上创造艺术和美
+                计算机使生活更美好</figcaption>
+        </figure>
+        <div class="card">
+            <h1>我的名片</h1>
+            <p>网名：loon | 逍遥游</p>
+            <p>职业：嵌入式软件开发</p>
+            <p>电话：18392085981</p>
+            <p>Email：2453419889@qq.com</p>
+            <ul class="linkmore">
+                <li><a href="talk.html" class="talk" title="给我留言（暂不支持）"></a></li>
+                <li><a href="index.html" class="address" title="个人主页（正在完善中）"></a></li>
+                <li><a href="https://mail.qq.com/" class="email" title="给我写邮件"></a></li>
+                <li><a href="/photos/" class="photos" title="成果照片(正在收集中)"></a></li>
+                <li><a href="index.html" class="heart" title="关注我(暂不支持)"></a></li>
+            </ul>
+        </div>
+    </div>
+    <!--info end-->
+    <div class="blank"></div>
+    <div class="blogs">
+        <ul class="bloglist">
+            <li>
+                <div class="arrow_box">
+                    <div class="ti"></div>
+                    <!--三角形-->
+                    <div class="ci"></div>
+                    <!--圆形-->
+                    <h2 class="title"><a href="./Development/UIdevelopment/webDevelopment/create_website_by_githubpages.html" target="_blank">借助GitHub搭建静态个人网站并绑定域名</a></h2>
+                    <ul class="textinfo">
+                        <a href="./Development/UIdevelopment/webDevelopment/create_website_by_githubpages.html"><img src="images/s1.png"></a>
+                        <p>GitHub Pages提供搭建静态页面的功能，因此，我们不需要掏钱买虚拟主机了，可以借助于GitHub搭建属于自己的个人博客网站，并且GitHub pages支持域名绑定，因此，我们只需要再花一点钱买一个域名，就可以搭建一个有自己域名的个人静态网站了。</p>
+                    </ul>
+                    <!--<ul class="details">-->
+                        <!--<li class="likes"><a href="#">10</a></li>-->
+                        <!--<li class="comments"><a href="#">34</a></li>-->
+                        <!--<li class="icon-time"><a href="#">2013-8-7</a></li>-->
+                    <!--</ul>-->
+                </div>
+                <!--arrow_box end-->
+            </li>
+            <li>
+                <div class="arrow_box">
+                    <div class="ti"></div>
+                    <!--三角形-->
+                    <div class="ci"></div>
+                    <!--圆形-->
+                    <h2 class="title"><a href="/" target="_blank">使用MarkDown快速书写技术博客并发布在CSDN及个人博客网站上</a></h2>
+                    <ul class="textinfo">
+                        <a href="/"><img src="images/s2.png"></a>
+                        <p>Markdown 是一个 Web 上使用的文本到HTML的转换工具，可以通过简单、易读易写的文本格式生成结构化的HTML文档。目前 github、Stackoverflow 等网站均支持这种格式。这样，我可以使用MarkDown语法写完总结或者博客后，很简单的同时发布在CSDN以及个人网站上。</p>
+                    </ul>
+                    <!--<ul class="details">-->
+                        <!--<li class="likes"><a href="#">102</a></li>-->
+                        <!--<li class="comments"><a href="#">58</a></li>-->
+                        <!--<li class="icon-time"><a href="#">2013-8-7</a></li>-->
+                    <!--</ul>-->
+                </div>
+                <!--arrow_box end-->
+            </li>
+            <li>
+                <div class="arrow_box">
+                    <div class="ti"></div>
+                    <!--三角形-->
+                    <div class="ci"></div>
+                    <!--圆形-->
+                    <h2 class="title"><a href="/" target="_blank">VMware安装Ubuntu及VMware Tools实用总结</a></h2>
+                    <ul class="textinfo">
+                        <a href="/"><img src="images/s3.png"></a>
+                        <p>由于Linux的开源性，目前大多数嵌入式设备大多选择Linux系统，而学习Linux就必须从某一个Linux系统开始了，目前Linux的桌面系统很多，大家不必纠结于选择什么系统，我这里选用Ubuntu16.04，如果直接安装双系统的话，Windows上的很多软件就无法使用了，不停的切换系统显然不是一个好的选择，因此在Windows上安装虚拟机来安装Ubuntu是一个很不错的选择。</p>
+                    </ul>
+                    <!--<ul class="details">-->
+                        <!--<li class="likes"><a href="#">15</a></li>-->
+                        <!--<li class="comments"><a href="#">2</a></li>-->
+                        <!--<li class="icon-time"><a href="#">2013-8-7</a></li>-->
+                    <!--</ul>-->
+                </div>
+                <!--arrow_box end-->
+            </li>
+            <li>
+                <div class="arrow_box">
+                    <div class="ti"></div>
+                    <!--三角形-->
+                    <div class="ci"></div>
+                    <!--圆形-->
+                    <h2 class="title"><a href="/" target="_blank">Ubuntu上安装LAMP环境</a></h2>
+                    <ul class="textinfo">
+                        <a href="/"><img src="images/s4.jpg"></a>
+                        <p>Linux环境下没有很好的IDE，在做一些小项目时，我们借助于vim及其插件搭建开发IDE，但是使用上还是有些不仅人意，大项目的话我们都是在Windows上使用SI来编辑，然后仅仅在Linux上编译以及调试运行，那么中等项目呐，当我接触了Qt之后，发现Qt creator是一个不错的选择，可以自己选择编辑器、编译器以及调试器，编辑器有它自带的，也可以选择vim，编译器甚至可以选择系统上的交叉编译器，调试器甚至可以选择远程调试器，这样可以说，对于交叉编译及远程调试也有了很好的支持，但是它多cmake的支持目前做的不是很好，期待后续更新。</p>
+                    </ul>
+                    <!--<ul class="details">-->
+                        <!--<li class="likes"><a href="#">102</a></li>-->
+                        <!--<li class="comments"><a href="#">58</a></li>-->
+                        <!--<li class="icon-time"><a href="#">2013-8-7</a></li>-->
+                    <!--</ul>-->
+                </div>
+                <!--arrow_box end-->
+            </li>
+            <li>
+                <div class="arrow_box">
+                    <div class="ti"></div>
+                    <!--三角形-->
+                    <div class="ci"></div>
+                    <!--圆形-->
+                    <h2 class="title"><a href="/" target="_blank">下载安装tortoiseGit</a></h2>
+                    <ul class="textinfo">
+                        <a href="/"><img src="images/s5.jpg"></a>
+                        <p>目前，分布式代码管理工具Git已然成为主流，学习并掌握它是必不可少的，但是习惯了SVN的我，在使用Git初期总是感觉不顺手，所幸tortoise依然给力，tortoiseGit的图形界面和tortoiseSVN基本相同，这样，从SVN到Git的过渡也就只差思想上的过渡了。</p>
+                    </ul>
+                    <!--<ul class="details">-->
+                        <!--<li class="likes"><a href="#">15</a></li>-->
+                        <!--<li class="comments"><a href="#">2</a></li>-->
+                        <!--<li class="icon-time"><a href="#">2013-8-7</a></li>-->
+                    <!--</ul>-->
+                </div>
+                <!--arrow_box end-->
+            </li>
+        </ul>
+        <!--bloglist end-->
+        <aside>
+            <div class="tuijian">
+                <h2>推荐文章</h2>
+                <ol>
+                    <li><span><strong>1</strong></span><a href="/">借助GitHub搭建静态个人网站并绑定域名</a></li>
+                    <li><span><strong>2</strong></span><a href="/">使用MarkDown快速书写技术博客并发布在CSDN及个人博客网站</a></li>
+                    <li><span><strong>3</strong></span><a href="/">VMware安装Ubuntu及VMware Tools实用总结</a></li>
+                    <li><span><strong>4</strong></span><a href="/">Ubuntu上安装LAMP环境</a></li>
+                    <li><span><strong>5</strong></span><a href="/">下载安装tortoiseGit</a></li>
+                    <li><span><strong>6</strong></span><a href="/">将vim打造成IDE总结(一)</a></li>
+                    <li><span><strong>7</strong></span><a href="/">将vim打造成IDE总结(二)</a></li>
+                    <li><span><strong>8</strong></span><a href="/">WAMP简单介绍和WampServer下载安装汉化详细说明</a></li>
+                    <li><span><strong>9</strong></span><a href="/">电脑键盘指法的正确练习步骤</a></li>
+                </ol>
+            </div>
+            <div class="toppic">
+                <h2>图文并茂</h2>
+                <ul>
+                    <li><a href="/"><img src="images/k01.jpg">ps制作GIF图
+                    </a></li>
+                    <li><a href="/"><img src="images/k02.jpg">ps更改图片像素大小
+                    </a></li>
+                    <li><a href="/"><img src="images/k03.jpg">截取并制作图片
+                    </a></li>
+                </ul>
+            </div>
+            <div class="clicks">
+                <h2>热门点击</h2>
+                <ol>
+                    <li><span><a href="/">语言学习</a></span><a href="/">如何学习一门程序语言</a></li>
+                    <li><span><a href="/">开发工具及开发环境</a></span><a href="/">webstorm安装及汉化后无法设置的原因总结</a></li>
+                    <li><span><a href="/">服务端开发</a></span><a href="/">Ubuntu上搭建自己的ngrok服务器</a></li>
+                    <li><span><a href="/">数据库</a></span><a href="/">基于c语言的简单的mysql数据库操作</a></li>
+                    <li><span><a href="/">黑客与安全</a></span><a href="/"></a></li>
+                    <li><span><a href="/">计算机基础</a></span><a href="/"></a></li>
+                    <li><span><a href="/">程序人生</a></span><a href="/"></a></li>
+                    <li><span><a href="/">Qt5开发</a></span><a href="/">Qt5菜单编程</a></li>
+                    <li><span><a href="/">网页开发</a></span><a href="/">关于如何实现页面计时跳转的总结</a></li>
+                </ol>
+            </div>
+            <div class="search">
+                <form class="searchform" method="get" action="#">
+                    <input type="text" name="s" value="Search" onfocus="this.value=''" onblur="this.value='Search'">
+                </form>
+            </div>
+            <div class="viny">
+                <dl>
+                    <dt class="art"><img src="images/artwork.png" alt="专辑"></dt>
+                    <dd class="icon-song"><span></span>歌名：wake up</dd>
+                    <dd class="icon-artist"><span></span>歌手：AAA</dd>
+                    <dd class="icon-album"><span></span>所属专辑：Wake up!</dd>
+                    <dd class="icon-like"><span></span><a href="http://music.163.com/#/song?id=28754588">喜欢</a></dd>
+                    <dd class="music">
+                        <audio src="images/WakeUp.mp3" controls></audio>
+                    </dd>
+                    <!--也可以添加loop属性 音频加载到末尾时，会重新播放-->
+                </dl>
+            </div>
+        </aside>
+    </div>
+    <!--blogs end-->
+</div>
+<!--mainbody end-->
+<footer>
+    <div class="footer-mid">
+        <div class="links">
+            <h2>推荐链接</h2>
+            <ul>
+                <li><a href="http://www.runoob.com">菜鸟教程</a></li>
+                <li><a href="http://www.yangqq.com">博客模板</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>loon's index page <a href="http://xiaoyaoyou.xyz">loon</a></p>
+    </div>
+</footer>
+<!-- jQuery仿腾讯回顶部和建议 代码开始 -->
+<div id="tbox"> <a id="togbook" href="/e/tool/gbook/?bid=1"></a> <a id="gotop" href="javascript:void(0)"></a> </div>
+<!-- 代码结束 -->
 </body>
 </html>
