@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>将vim打造成IDE总结(一)</title><link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}#write, body { height: auto; }
+#write, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write ol, #write p, #write ul { position: relative; }
+#write, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write, pre { white-space: pre-wrap; }
+.CodeMirror, .md-fences, table { text-align: left; }
+.md-reset, a:active, a:hover { outline: 0px; }
+.md-reset, .md-toc-item a { text-decoration: none; }
+.MathJax_SVG, .md-reset { float: none; direction: ltr; }
+:root { --bg-color:#ffffff; --text-color:#333333; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+a.url { word-break: break-all; }
+.in-text-selection, ::selection { background: rgb(181, 214, 252); text-shadow: none; }
+#write { margin: 0px auto; word-break: normal; word-wrap: break-word; padding-bottom: 70px; overflow-x: visible; }
+.first-line-indent #write p .md-line { text-indent: 0px; }
+.first-line-indent #write li, .first-line-indent #write p, .first-line-indent #write p .md-line:first-child { text-indent: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write > blockquote:first-child, #write > div:first-child, #write > ol:first-child, #write > p:first-child, #write > pre:first-child, #write > table:first-child, #write > ul:first-child { margin-top: 30px; }
+#write li > table:first-child { margin-top: -20px; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+p { -webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; }
+.mathjax-block { margin-top: 0px; margin-bottom: 0px; -webkit-margin-before: 0px; -webkit-margin-after: 0px; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+#write > figure:first-child { margin-top: 16px; }
+figure { overflow-x: auto; margin: -8px 0px 0px -8px; max-width: calc(100% + 16px); padding: 8px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; }
+.CodeMirror-line, .md-fences { break-inside: avoid; }
+table.md-table td { min-width: 80px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; margin-right: 4px; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+.md-fences { font-size: 0.9rem; display: block; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+.md-fences .CodeMirror.CodeMirror-wrap { top: -1.6em; margin-bottom: -1.6em; }
+.md-fences.mock-cm { white-space: pre-wrap; }
+.show-fences-line-number .md-fences { padding-left: 0px; }
+.show-fences-line-number .md-fences.mock-cm { padding-left: 40px; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; vertical-align: top; background: 0px 0px; text-shadow: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; }
+.md-toc-inner, a img, img a { cursor: pointer; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid-page; orphans: 2; }
+  p { orphans: 4; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { white-space: pre-wrap; margin-top: 0.714em; font-size: 0.7em; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > img:only-child { display: block; margin: auto; }
+.md-line > .md-image:only-child, p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+.mathjax-block:not(:empty)::after, .md-toc-content::after, .md-toc::after { display: none; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.mathjax-block { white-space: pre; overflow: hidden; width: 100%; }
+p + .mathjax-block { margin-top: -1.143rem; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.MathJax_SVG, .mathjax-block .MathJax_SVG_Display { text-indent: 0px; max-width: none; max-height: none; min-height: 0px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-inner:hover { }
+.md-toc-inner { display: inline-block; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, tt { font-family: var(--monospace); }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; }
+a.md-print-anchor { border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.mathjax-block .MathJax_SVG_Display { text-align: center; margin: 1em 0px; position: relative; min-width: 100%; width: auto; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: monospace; }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; min-width: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg, [lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+
+
+:root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: normal; src: local("Open Sans Regular"), url("./github/400.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: italic; font-weight: normal; src: local("Open Sans Italic"), url("./github/400i.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: bold; src: local("Open Sans Bold"), url("./github/700.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: italic; font-weight: bold; src: local("Open Sans Bold Italic"), url("./github/700i.woff") format("woff"); }
+html { font-size: 16px; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
+#write { max-width: 860px; margin: 0px auto; padding: 20px 30px 100px; }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+body > :first-child { margin-top: 0px !important; }
+body > :last-child { margin-bottom: 0px !important; }
+a { color: rgb(65, 131, 196); }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 4px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border-width: 0px 0px 1px; border-style: none none solid; border-top-color: initial; border-right-color: initial; border-left-color: initial; border-image: initial; overflow: hidden; box-sizing: content-box; border-bottom-color: rgb(221, 221, 221); }
+body > h2:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child + h2 { margin-top: 0px; padding-top: 0px; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child { margin-top: 0px; padding-top: 0px; }
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 { margin-top: 0px; padding-top: 0px; }
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p { margin-top: 0px; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 4px solid rgb(221, 221, 221); padding: 0px 15px; color: rgb(119, 119, 119); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border-top: 1px solid rgb(204, 204, 204); margin: 0px; padding: 0px; }
+table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
+table tr th { font-weight: bold; border-width: 1px 1px 0px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204); border-image: initial; border-bottom-style: initial; border-bottom-color: initial; text-align: left; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(204, 204, 204); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); }
+.md-fences, code, tt { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); border-radius: 3px; font-family: Consolas, "Liberation Mono", Courier, monospace; padding: 2px 4px 0px; font-size: 0.9em; }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding: 8px 1em 6px; }
+.md-task-list-item > input { margin-left: -1.3em; }
+@media screen and (min-width: 914px) {
+}
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { word-wrap: break-word; }
+}
+.md-fences { background-color: rgb(248, 248, 248); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border-radius: 3px; font-family: Consolas, "Liberation Mono", Courier, monospace; padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
+.md-tag { color: inherit; }
+.md-toc { margin-top: 20px; padding-bottom: 20px; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+#md-notification::before { top: 10px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
+.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
+.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
+.md-lang { color: rgb(180, 101, 77); }
+.html-for-mac .context-menu { --item-hover-bg-color: #E6F0FE; }
+
+
+
+
+
+ .typora-export p, .typora-export .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><h1><a name='header-n494' class='md-header-anchor '></a>将vim打造成IDE总结(一)</h1><hr /><p>&nbsp;</p><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="n494"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n494">将vim打造成IDE总结(一)</a></span><span class="md-toc-item md-toc-h2" data-ref="n499"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n499"><strong>一、源码安装编辑器vim</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n508"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n508">1. <strong>Windows下安装</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n513"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n513">2. <strong>Linux下选择Unix</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n556"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n556">二、<strong>插件管理</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n597"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n597">三、<strong>快捷键等常用设置</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n684"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n684"><strong>四、界面美化</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n685"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n685"><strong>1.主题风格</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n708"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n708"><strong>2.营造专注气氛</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n731"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n731"><strong>3.添加辅助信息</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n754"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n754"><strong>4.其他美化</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n769"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n769"><strong>五、代码分析</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n770"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n770"><strong>1.语法高亮</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n779"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n779"><strong>2.代码缩进</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n828"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n828"><strong>3.代码折叠</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n843"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n843"><strong>4.接口与实现快速切换</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n868"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n868"><strong>5.Tag List</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n907"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n907"><strong>6.NERDTree</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n934"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n934"><strong>六、代码开发</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n935"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n935"><strong>1.快速开关注释</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n946"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n946"><strong>2.模板补全</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n965"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n965"><strong>3.快速输入结对符auto-pairs</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n968"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n968"><strong>4.智能补全supertab</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n971"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n971"><strong>5.代码查错syntastic</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n974"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n974"><strong>七、最后</strong></a></span></p></div><p><br/></p><p>    vim似乎有一种魔力，让人越用越喜欢。本人使用VMware12以及Ubuntu16.04，因此本次总结是基于这两者的。</p><h2><a name='header-n499' class='md-header-anchor '></a><strong>一、源码安装编辑器vim</strong></h2><p>Windows下和Linux下vim安装配置稍有不同，可以在</p><p><a href='https://vim.sourceforge.io/download.php' target='_blank' class='url'>https://vim.sourceforge.io/download.php</a></p><p>search下载，网站不容易进，如下：</p><p> <img src='https://img-blog.csdn.net/20171027160834447?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5NTEwODEz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center' alt='img' referrerPolicy='no-referrer' /></p><h3><a name='header-n508' class='md-header-anchor '></a>1. <strong>Windows下安装</strong></h3><p>可以选择.exe文件下载，之后像安装其他软件一样直接安装就可以了，Windows下一般使用gVim。</p><p> <img src='https://img-blog.csdn.net/20171027161105876?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5NTEwODEz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center' alt='img' referrerPolicy='no-referrer' /></p><h3><a name='header-n513' class='md-header-anchor '></a>2. <strong>Linux下选择Unix</strong></h3><p>（1）建议使用git下载</p><p>因为vim是开源的，现在就托管在github上，它的很多插件也是在github上的，所以使用git也方便后面下载其他插件。</p><p>git clone<a href='https://github.com/vim/vim.git' target='_blank' class='url'>https://github.com/vim/vim.git</a></p><p>cd vim/sr</p><p>make</p><p> <img src='https://img-blog.csdn.net/20171027161116935?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5NTEwODEz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center' alt='img' referrerPolicy='no-referrer' /></p><p>（2）当然，也可以下载压缩包，</p><p>为了使得vim支持Python等，编译vim源码前在系统中做一些准备，如下：</p><p>预先安装相关依赖库的头文件，python-devel、python3-devel、ruby-devel、libX11-devel、gtk-devel、gtk2-devel、gtk3-devel，如果缺失，源码构建过程虽不会报错，但构建完成后的vim 很可能丢失相关功能。</p><p>tar jxvf vim-7.4.tar.bz2 vim74/</p><p>cd vim74/</p><p>sudo apt-get update</p><p>sudo apt-get install <a href='http://lib.csdn.net/base/python'>python</a>-dev</p><p>sudo apt-get install libgtk2.0-dev</p><p>sudo apt-get install libgtk-3-dev</p><p>./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config/ --enable-perlinterp --enable-gui=gtk2 --enable-cscope --prefix=/usr --enable-luainterp</p><p>./configure这几行是整体，不要错了，其中，--enable-rubyinterp、--enable-pythoninterp、--enable-perlinterp、--enable-luainterp等分别表示支持ruby、python、perl、lua编写的插件，--enable-gui=gtk2表示生成gvim，--enable-cscope支持cscope，--with-python-config-dir=/usr/lib/python2.7/config/指定python路径（先自行安装Python及python的头文件python-devel），这几个特性非常重要，影响后面各类插件的使用，插件可能会是这几种语言写的，如果没有安装，相关的插件就无法运行。</p><p>make VIMRUNTIMEDIR=/usr/share/vim/vim74 &amp;&amp; make install</p><p>构建完成后用 vim 打开任意文件然后在其中执行</p><p>:echo has(&#39;python&#39;)</p><p>若输出 1 则表示构建出的vim 已支持python，反之，0则表示不支持。</p><h2><a name='header-n556' class='md-header-anchor '></a>二、<strong>插件管理</strong></h2><p>Vim的核心就是vimrc文件，每一个人的vimrc可能都不同，Linux下一般会在~目录下，为.vimrc，如果没有.vimrc文件则创建该文件，Windows下为_vimrc。</p><p>虽然vim本身已经有很多功能了，而且通过修改vimrc文件也可以很方便使用vim，但vim仍然只是一个编辑器，如何让它像IDE一样呐，答案就是vim插件，随着插件越来越多，vim可能会变得很臃肿，清理也不好清理，所以一个管理插件的插件就出现了，现在的管理插件有不少，我第一个接触的也一直在使用的是pathogen，Windows下和Linux下都可以使用，而且很方便，将插件目录直接放到到固定目录下即可使用，需要清理时直接删除不要的插件目录即可。</p><p>安装：先清空 .vim/ 下的所有文件（记得备份）；</p><p>创建目录 ~/.vim/bundle/；</p><p>下载pathogen.vim（<a href='https://github.com/tpope/vim-pathogen' target='_blank' class='url'>https://github.com/tpope/vim-pathogen</a>）至 ~/.vim/bundle/。</p><p>这里可以使用git直接安装pathogen。</p><p>Ubuntu下安装git的方法：</p><p>sudo apt-get install git</p><p>然后使用git安装pathogen：</p><p>mkdir ~/.vim/bundle/</p><p>cd ~/.vim/bundle/</p><p>git clone <a href='https://github.com/tpope/vim-pathogen.git' target='_blank' class='url'>https://github.com/tpope/vim-pathogen.git</a></p><p>所有插件均为.vim文件，所以如果插件安装后显示不成功可以到相关目录下查看是否存在相应的.vim文件。</p><p>设置：接下来在 .vimrc 或_vimrc中增加相关配置信息：</p><p>“将pathogen自身也置于独立目录中，需指定其路径</p><p>runtime bundle/vim-pathogen/autoload/pathogen.vim</p><p>“运行 pathogen</p><p>execute pathogen#infect()</p><p>路径要和pathogen的安装路径一致，否则无法运行。</p><p>该插件使用：比如要安装新插件 plugin_name，先在~/.vim/bundle/ 下创建目录plugin_name/，然后到vim 官网下载plugin_name 压缩包并解压至~/.vim/bundle/plugin_name/ 即可，注意不要重复包含多次plugin_name/ 目录，如，~/.vim/bundle/plugin_name/plugin_name/。要卸载插件，直接删除plugin_name/ 插件目录即可。（建议使用git直接克隆插件到相关位置，很方便）</p><h2><a name='header-n597' class='md-header-anchor '></a>三、<strong>快捷键等常用设置</strong></h2><p>这些根据个人习惯设定，之后形成自己的vimrc。</p><p>&quot; 定义快捷键的前缀，即<Leader></p><p>let mapleader=&quot;;&quot;</p><p>&quot; 开启文件类型侦测</p><p>filetype on</p><p>&quot; 根据侦测到的不同类型加载对应的插件</p><p>filetype plugin on</p><p>&quot; 定义快捷键到行首和行尾</p><p>nmap lb 0</p><p>nmap le $</p><p>&quot; 设置快捷键将选中文本块复制至系统剪贴板</p><p>vnoremap <Leader>y &quot;+y</p><p>&quot; 设置快捷键将系统剪贴板内容粘贴至 vim</p><p>nmap <Leader>p &quot;+p</p><p>&quot; 定义快捷键关闭当前分割窗口</p><p>nmap <Leader>q :q<CR></p><p>&quot; 定义快捷键保存当前窗口内容</p><p>nmap <Leader>w :w<CR></p><p>&quot; 定义快捷键保存所有窗口内容并退出 vim</p><p>nmap <Leader>WQ :wa<CR>:q<CR></p><p>&quot; 不做任何保存，直接退出 vim</p><p>nmap <Leader>Q :qa!<CR></p><p>&quot; 依次遍历子窗口</p><p>nnoremap nw <C-W><C-W></p><p>&quot; 跳转至右方的窗口</p><p>nnoremap <Leader>lw <C-W>l</p><p>&quot; 跳转至方的窗口</p><p>nnoremap <Leader>hw <C-W>h</p><p>&quot; 跳转至上方的子窗口</p><p>nnoremap <Leader>kw <C-W>k</p><p>&quot; 跳转至下方的子窗口</p><p>nnoremap <Leader>jw <C-W>j</p><p>&quot; 定义快捷键在结对符之间跳转，助记pair</p><p>nmap <Leader>pa %</p><p>其他。搜索、vim 命令补全等设置：</p><p>&quot; 开启实时搜索功能</p><p>set incsearch</p><p>&quot; 搜索时大小写不敏感</p><p>set ignorecase</p><p>&quot; 关闭兼容模式</p><p>set nocompatible</p><p>&quot; vim 自身命令行模式智能补全</p><p>set wildmenu</p><h2><a name='header-n684' class='md-header-anchor '></a><strong>四、界面美化</strong></h2><h3><a name='header-n685' class='md-header-anchor '></a><strong>1.主题风格</strong></h3><p>参考给了一个地址，可以自行挑选：<a href='http://vimcolorschemetest.googlecode.com/svn/html/index-c.html' target='_blank' class='url'>http://vimcolorschemetest.googlecode.com/svn/html/index-c.html</a></p><p>素雅 solarized（<a href='https://github.com/altercation/vim-colors-solarized' target='_blank' class='url'>https://github.com/altercation/vim-colors-solarized</a> ）</p><p>多彩 molokai（<a href='https://github.com/tomasr/molokai' target='_blank' class='url'>https://github.com/tomasr/molokai</a> ）</p><p>复古 phd（<a href='http://www.vim.org/scripts/script.php?script_id=3139' target='_blank' class='url'>http://www.vim.org/scripts/script.php?script_id=3139</a> ）</p><p>我用的是多彩，大家自行选择。</p><p>pathogen 无法安装主题插件，请将主题插件（仅 *.vim文件而非插件目录，即，solarized.vim、molokai.vim、phd.vim）拷贝至~/.vim/colors/，然后在.vimrc中设定选用其作为主题：</p><p>&quot; 配色方案</p><p>set background=dark</p><p>colorscheme solarized</p><p>&quot;colorscheme molokai</p><p>&quot;colorscheme phd</p><h3><a name='header-n708' class='md-header-anchor '></a><strong>2.营造专注气氛</strong></h3><p>&quot; 禁止光标闪烁</p><p>set gcr=a:block-blinkon0</p><p>&quot; 禁止显示滚动条</p><p>set guioptions-=l</p><p>set guioptions-=L</p><p>set guioptions-=r</p><p>set guioptions-=R</p><p>&quot; 禁止显示菜单和工具条</p><p>set guioptions-=m</p><p>set guioptions-=T</p><p>后面的全屏我没设置，本人不喜欢全屏，有兴趣的可以去参考网址查看方法。</p><h3><a name='header-n731' class='md-header-anchor '></a><strong>3.添加辅助信息</strong></h3><p>&quot; 总是显示状态栏</p><p>set laststatus=2</p><p>&quot; 显示光标当前位置</p><p>set ruler</p><p>&quot; 开启行号显示</p><p>set number</p><p>&quot; 高亮显示当前行/列</p><p>set cursorline</p><p>set cursorcolumn</p><p>&quot; 高亮显示搜索结果</p><p>set hlsearch</p><h3><a name='header-n754' class='md-header-anchor '></a><strong>4.其他美化</strong></h3><p>需要借助插件 Powerline（<a href='https://github.com/Lokaltog/vim-powerline' target='_blank' class='url'>https://github.com/Lokaltog/vim-powerline</a> ）美化状态栏，在.vimrc 中设定状态栏主题风格：</p><p>git clone <a href='https://github.com/Lokaltog/vim-powerline' target='_blank' class='url'>https://github.com/Lokaltog/vim-powerline</a></p><p>&quot; 设置状态栏主题风格</p><p>let g:Powerline_colorscheme=&#39;solarized256&#39;</p><p>有git和pathogen后，只需要</p><p>cd ~/.vim/bundle/</p><p>还可以设置字体等等，这里不再多说，有兴趣的可以在网上查找。</p><h2><a name='header-n769' class='md-header-anchor '></a><strong>五、代码分析</strong></h2><h3><a name='header-n770' class='md-header-anchor '></a><strong>1.语法高亮</strong></h3><p>&quot; 开启语法高亮功能</p><p>syntax enable</p><p>&quot; 允许用指定语法高亮配色方案替换默认方案</p><p>syntax on</p><h3><a name='header-n779' class='md-header-anchor '></a><strong>2.代码缩进</strong></h3><p>&quot; 自适应不同语言的智能缩进</p><p>filetype indent on</p><p>&quot; 将制表符扩展为空格</p><p>set expandtab</p><p>&quot; 设置编辑时制表符占用空格数</p><p>set tabstop=4</p><p>&quot; 设置格式化时制表符占用空格数</p><p>set shiftwidth=4</p><p>&quot; 让 vim把连续数量的空格视为一个制表符</p><p>set softtabstop=4</p><p>可视化的方式能将相同缩进的代码关联起来：</p><p>安装Indent Guides（<a href='https://github.com/nathanaelkane/vim-indent-guides' target='_blank' class='url'>https://github.com/nathanaelkane/vim-indent-guides</a>）。</p><p>cd ~/.vim/bundle/</p><p>git clone <a href='https://github.com/nathanaelkane/vim-indent-guides.git' target='_blank' class='url'>https://github.com/nathanaelkane/vim-indent-guides.git</a></p><p>sudo vim ~/.vimrc</p><p>增加如下配置信息：</p><p>&quot; 随 vim自启动</p><p>let g:indent_guides_enable_on_vim_startup=1</p><p>&quot; 从第二层开始可视化显示缩进</p><p>let g:indent_guides_start_level=2</p><p>&quot; 色块宽度</p><p>let g:indent_guides_guide_size=1</p><p>&quot; 快捷键 i开/关缩进可视化</p><p>:nmap <silent> <Leader>i <Plug>IndentGuidesToggle</p><h3><a name='header-n828' class='md-header-anchor '></a><strong>3.代码折叠</strong></h3><p>vim 自身支持多种折叠：手动建立折叠（manual）、基于缩进进行折叠（indent）、基于语法进行折叠（syntax）、未更改文本构成折叠（diff）等等，其中，indent、syntax比较适合编程，按需选用。增加如下配置信息：</p><p>&quot; 基于缩进或语法进行代码折叠</p><p>&quot;set foldmethod=indent</p><p>set foldmethod=syntax</p><p>&quot; 启动 vim时关闭折叠代码</p><p>set nofoldenable</p><p>操作：za，打开或关闭当前折叠；zM，关闭所有折叠；zR，打开所有折叠。</p><h3><a name='header-n843' class='md-header-anchor '></a><strong>4.接口与实现快速切换</strong></h3><p>假如在接口文件中，vim 自动帮我找到对应的实现文件，当键入快捷键，可以在当前窗口中打开对应实现文件，也可以在当前窗口中分裂一个子窗口显示对应实现文件。</p><p>a.vim（<a href='https://github.com/vim-scripts/a.vim' target='_blank' class='url'>https://github.com/vim-scripts/a.vim</a> ）来了。</p><p>cd ~/.vim/bundle/</p><p>git clone  <a href='https://github.com/vim-scripts/a.vim.git' target='_blank' class='url'>https://github.com/vim-scripts/a.vim.git</a></p><p>sudo vim ~/.vimrc</p><p>安装后增加配置信息：</p><p>&quot; *.cpp 和 *.h间切换</p><p>nmap <Leader>ch :A<CR></p><p>&quot; 子窗口中显示 *.cpp或 *.h</p><p>nmap <Leader>sch :AS<CR></p><p>这样，键入 ;ch 就能在实现文件和接口文件间切换，键入;sch 子窗口中将显示实现文件/接口文件。</p><p>a.vim 实现原理很简单，基于文件名进行关联，比如，a.vim能识别 my_class.h与 my_class.cpp，而无法识别my_class.h 与your_class.cpp。所以，你在命名文件时得注意下。</p><h3><a name='header-n868' class='md-header-anchor '></a><strong>5.Tag List</strong></h3><p>Ubuntu下：</p><p>sudo apt-get install ctags</p><p>下载TagList到bundle目录下即可</p><p>Windows下：</p><p>Windows下较为麻烦，需要先安装Windows版本的ctags，然后将其路径添加到系统中，然后将TagList放到bundle目录下才可以运行TagList，否则会一直显示找不到ctags的路径。</p><p>Windows下TagList下载地址：</p><p><a href='http://www.vim.org/scripts/download_script.php?src_id=7701' target='_blank' class='url'>http://www.vim.org/scripts/download_script.php?src_id=7701</a></p><p>Ctags下载地址：</p><p><a href='http://vdisk.weibo.com/s/vyxHhy62jN0S' target='_blank' class='url'>http://vdisk.weibo.com/s/vyxHhy62jN0S</a></p><p>下载完后解压找到ctags.exe，将其路径添加到Windows系统中，然后将TagList的文件放到bundle下再打开gVim就发现已经可以使用TagList了。</p><p> <img src='https://img-blog.csdn.net/20171027161215420?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5NTEwODEz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center' alt='img' referrerPolicy='no-referrer' /></p><p> <img src='https://img-blog.csdn.net/20171027161226067?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM5NTEwODEz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center' alt='img' referrerPolicy='no-referrer' /></p><p>配置信息如下：</p><p>&quot;不同时显示多个文件的tag，只显示当前文件的</p><p>let Tlist_Show_One_File = 1</p><p>&quot;如果taglist窗口是最后一个窗口，则退出vim</p><p>let Tlist_Exit_OnlyWindow = 1</p><p>&quot;设置Tlist的位置</p><p>let Tlist_Use_Right_Window = 1</p><h3><a name='header-n907' class='md-header-anchor '></a><strong>6.NERDTree</strong></h3><p>git clone <a href='https://github.com/scrooloose/nerdtree.git' target='_blank' class='url'>https://github.com/scrooloose/nerdtree.git</a></p><p>&quot; 使用 NERDTree插件查看工程文件。设置快捷键，速记：file list</p><p>nmap <Leader>fl :NERDTreeToggle<CR></p><p>&quot; 设置NERDTree子窗口宽度</p><p>let NERDTreeWinSize=32</p><p>&quot; 设置NERDTree子窗口位置</p><p>let NERDTreeWinPos=&quot;right&quot;</p><p>&quot; 显示隐藏文件</p><p>let NERDTreeShowHidden=1</p><p>&quot; NERDTree 子窗口中不显示冗余帮助信息</p><p>let NERDTreeMinimalUI=1</p><p>&quot; 删除文件时自动删除文件对应 buffer</p><p>let NERDTreeAutoDeleteBuffer=1</p><h2><a name='header-n934' class='md-header-anchor '></a><strong>六、代码开发</strong></h2><h3><a name='header-n935' class='md-header-anchor '></a><strong>1.快速开关注释</strong></h3><p>NERD Commenter（<a href='https://github.com/scrooloose/nerdcommenter' target='_blank' class='url'>https://github.com/scrooloose/nerdcommenter</a> ），NERD Commenter 根据编辑文档的扩展名自适应采用何种注释风格，如，文档名 x.cpp 则采用//注释风格，而x.c 则是// 注释风格；另外，如果选中的代码并非整行，那么该插件将用// 只注释选中部分。</p><p>git clone <a href='https://github.com/scrooloose/nerdcommenter.git' target='_blank' class='url'>https://github.com/scrooloose/nerdcommenter.git</a></p><p>常用操作：（注释时先按数字确认从现在的位置注释到哪个位置，然后按分号，最后按快捷键，例如：19；cc就是从当前位置注释19行，取消注释同理。）</p><p>cc，注释当前选中文本，如果选中的是整行则在每行首添加 //，如果选中一行的部分内容则在选中部分前后添加分别/、/；</p><p>cu，取消选中文本块的注释。</p><h3><a name='header-n946' class='md-header-anchor '></a><strong>2.模板补全</strong></h3><p> UltiSnips（<a href='https://github.com/SirVer/ultisnips' target='_blank' class='url'>https://github.com/SirVer/ultisnips</a> ）</p><p>git clone <a href='https://github.com/SirVer/ultisnips.git' target='_blank' class='url'>https://github.com/SirVer/ultisnips.git</a></p><p>在进行模板补全时，你是先键入模板名（如，if），接着键入补全快捷键（默认），然后UltiSnips 根据你键入的模板名在代码模板文件中搜索匹配的“模板名-模板”，找到对应模板后，将模板在光标当前位置展开。</p><p>默认情况下，UltiSnips 模板补全快捷键是tab ，与后面介绍的 supertab 快捷键有冲突，所有须在 .vimrc 中重新设定：(无法补全的话可以下载代码块合集 <a href='https://github.com/honza/vim-snippets'>honza/vim-snippets</a>)</p><p>vim ~/.vimrc</p><p>&quot; UltiSnips 的 tab键与supertab冲突，重新设定</p><p>let g:UltiSnipsExpandTrigger=&quot;<leader><tab>&quot;</p><p>let g:UltiSnipsJumpForwardTrigger=&quot;<leader><tab>&quot;</p><p>let g:UltiSnipsJumpBackwardTrigger=&quot;<leader><s-tab>&quot;</p><h3><a name='header-n965' class='md-header-anchor '></a><strong>3.快速输入结对符auto-pairs</strong></h3><p>git clone <a href='https://github.com/jiangmiao/auto-pairs.git' target='_blank' class='url'>https://github.com/jiangmiao/auto-pairs.git</a></p><h3><a name='header-n968' class='md-header-anchor '></a><strong>4.智能补全supertab</strong></h3><p>git clone <a href='https://github.com/ervandew/supertab.git' target='_blank' class='url'>https://github.com/ervandew/supertab.git</a></p><h3><a name='header-n971' class='md-header-anchor '></a><strong>5.代码查错syntastic</strong></h3><p>git clone <a href='https://github.com/vim-syntastic/syntastic.git' target='_blank' class='url'>https://github.com/vim-syntastic/syntastic.git</a></p><h2><a name='header-n974' class='md-header-anchor '></a><strong>七、最后</strong></h2><p>编辑功能暂时告一段落，这些功能对于我目前来说已经足够。</p></div>
+</body>
+</html>
