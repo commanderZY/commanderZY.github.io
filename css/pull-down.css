@@ -1,0 +1,59 @@
+/*初始化全部选择器的margin、padding值*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/*设置导航div外包属性*/
+#nav {
+    width: 600px;
+    height: 40px;
+    margin: 0 auto;
+    background: #ccc;
+}
+
+/*设置ul的列表样式和行高*/
+ul {
+    list-style: none;
+    line-height: 40px;
+}
+
+/*设置a的文本装饰为none、文本居中对齐、显示为块显示*/
+a {
+    text-decoration: none;
+    /*text-align: center;*/
+    padding: 0 20px;
+    color: #000;
+    display: block;
+}
+
+/*设置一级菜单左浮动*/
+ul li {
+    /*float: left;*/
+}
+
+/*（最重要的一步！！！！！！）二级菜单默认显示为不显示*/
+ul li ul li {
+    float: none;
+    display: none;
+}
+
+/*（最重要的一步！！！！！！）当鼠标经过一级菜单时二级菜单设置为显示*/
+ul li:hover li {
+    display: block
+}
+
+/*设置a标签背景*/
+ul li ul li a {
+    background-color: #ccc;
+}
+
+/*设置一级菜单经过时背景颜色（这里设置的是全部a标签，由权值覆盖二级标签经过颜色）*/
+a:hover {
+    background-color: #F60;
+}
+
+/*设置二级菜单经过时的背景颜色*/
+ul li ul li a:hover {
+    background-color: #0CC;
+}
