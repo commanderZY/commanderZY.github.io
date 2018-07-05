@@ -1,59 +1,79 @@
-/*初始化全部选择器的margin、padding值*/
-* {
-    margin: 0;
-    padding: 0;
-}
-
-/*设置导航div外包属性*/
+*{margin: 0;padding: 0;}   /*消除各种浏览器的边距默认值*/
 #nav {
-    width: 600px;
-    height: 40px;
-    margin: 0 auto;
-    background: #ccc;
+    margin:20px auto;
+    text-align:center;
 }
 
-/*设置ul的列表样式和行高*/
-ul {
+#nav ul {
+    border-radius:10px;
+    background:linear-gradient(to bottom,#efefef,#bbbbbb);
+    padding:0 20px;
+    display:inline-table;
+    position:relative;
+    box-shadow:1px 1px 3px #666;
     list-style: none;
-    line-height: 40px;
 }
 
-/*设置a的文本装饰为none、文本居中对齐、显示为块显示*/
-a {
-    text-decoration: none;
-    /*text-align: center;*/
-    padding: 0 20px;
-    color: #000;
-    display: block;
+#nav ul ul {
+    display:none;
 }
 
-/*设置一级菜单左浮动*/
-ul li {
-    /*float: left;*/
+#nav ul li {
+    float:left;
+    list-style: none;
 }
 
-/*（最重要的一步！！！！！！）二级菜单默认显示为不显示*/
-ul li ul li {
-    float: none;
-    display: none;
+#nav ul::after {
+    content:"";
+    display:block;
+    clear:both;
 }
 
-/*（最重要的一步！！！！！！）当鼠标经过一级菜单时二级菜单设置为显示*/
-ul li:hover li {
-    display: block
+#nav ul li a {
+    display:block;
+    padding:25px 40px;
+    color:#000;
+    text-decoration:none;
+    font-family:"微软雅黑";
 }
 
-/*设置a标签背景*/
-ul li ul li a {
-    background-color: #ccc;
+#nav ul li:hover > ul {
+    display:block;
 }
 
-/*设置一级菜单经过时背景颜色（这里设置的是全部a标签，由权值覆盖二级标签经过颜色）*/
-a:hover {
-    background-color: #F60;
+#nav ul li:hover {
+    background:linear-gradient(to bottom,#4f5964,#5f6975);
 }
 
-/*设置二级菜单经过时的背景颜色*/
-ul li ul li a:hover {
-    background-color: #0CC;
+#nav ul li:hover a {
+    color:#FFF;
+}
+
+#nav ul ul {
+    background:#5f6975;
+    border-radius:0;
+    position:absolute;
+    top:auto;
+    padding:0;
+}
+
+#nav ul ul li {
+    float:none;
+    border-top:1px solid #6b727c;
+    border-bottom:1px solid #575f6a;
+}
+
+#nav ul ul li a {
+    color:#FFF;
+}
+
+#nav ul ul li a:hover {
+    background:#4b545f;
+}
+
+#nav ul ul ul {
+    width:100%;
+    position:absolute;
+    left:100%;
+    top:50%;
 }
