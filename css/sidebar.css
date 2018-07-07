@@ -1,6 +1,6 @@
 *{margin: 0;padding: 0;}   /*消除各种浏览器的边距默认值*/
 #leftMenu ul{              /*作用于id=leftMenu的元素所有含有的ul*/
-    width: 200px;            /*宽度设置为100*/
+    width: 200px;            /*宽度设置为200*/
     background: #DADADA;     /*增加背景色方便查看*/
     list-style: none;        /*去除列表的小圆点*/
     position:absolute;
@@ -8,21 +8,28 @@
 }
 
 #leftMenu li{              /*作用于id=leftMenu的元素所有含有的li*/
-    width: 200px;            /*宽度设置为100*/
+    width: 200px;            /*宽度设置为200*/
     position: relative;      /*设置为相对位置*/
     padding: 5px;
 }
 
 #leftMenu li:hover{              /*作用于id=leftMenu的元素所有含有的li被鼠标选中时*/
-    background: azure;
+    background: white;
 }
 
 #leftMenu li>ul{       /*作用于 li的直接子元素ul */
-    left: 200px;            /*一级目录本身宽度100px, 所以二级目录显示的时候要向右偏移100px*/
+    left: 200px;            /*一级目录本身宽度200px, 所以二级目录显示的时候要向右偏移100px*/
     top: 0;           /*top的偏移位置相对于父元素为0*/
     display: none;    /*二级目录默认是不显示的*/
     height: inherit;
 }
+
 #leftMenu li:hover>ul  {    /*当鼠标悬停在li上时, li的直接子元素ul就显示出来*/
     display: block;  /*显示出来*/
+}
+
+#p p{
+    margin-left: 15%;
+    padding: 10px 10px;
+    height: 100px;
 }
