@@ -1,0 +1,369 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>1.初识c语言</title><link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --node-fill: #ECECFF; --node-border: #CCCCFF; --note-fill: #fff5ad; --note-border: #aaaa33; --cluster-fill: #ffffde  !important; --cluster-border: #aaaa33  !important; }
+.mermaid .label { color: var(--text-color); }
+.node rect, .node circle, .node ellipse, .node polygon { fill: var(--node-fill); stroke: var(--node-border); stroke-width: 1px; }
+.edgePath .path { stroke: var(--text-color); }
+.edgeLabel { background-color: var(--bg-color); }
+.cluster rect { fill: rgb(255, 255, 222) !important; rx: 4 !important; stroke: rgb(170, 170, 51) !important; stroke-width: 1px !important; }
+.cluster text { fill: var(--text-color); }
+.actor { stroke: var(--node-border); fill: var(--node-fill); }
+text.actor { fill: var(--text-color); stroke: none; }
+.actor-line { stroke: grey; }
+.messageLine0 { stroke-width: 1.5; stroke: var(--text-color); }
+.messageLine1 { stroke-width: 1.5; stroke: var(--text-color); }
+#arrowhead { fill: var(--text-color); }
+#crosshead path { fill: var(--text-color)  !important; stroke: var(--text-color)  !important; }
+.messageText { fill: var(--text-color); stroke: none; }
+.labelBox { stroke: var(--node-border); fill: var(--node-fill); }
+.labelText { fill: var(--text-color); stroke: none; }
+.loopText { fill: var(--text-color); stroke: none; }
+.loopLine { stroke-width: 2; stroke: var(--node-border); }
+.note { stroke: var(--note-border); fill: var(--note-fill); }
+.noteText { fill: var(--text-color); stroke: none; font-size: 14px; }
+.section { stroke: none; opacity: 0.2; }
+.section0 { fill: rgba(102, 102, 255, 0.49); }
+.section2 { fill: rgb(255, 244, 0); }
+.section1, .section3 { fill: white; opacity: 0.2; }
+.sectionTitle0 { fill: var(--text-color); }
+.sectionTitle1 { fill: var(--text-color); }
+.sectionTitle2 { fill: var(--text-color); }
+.sectionTitle3 { fill: var(--text-color); }
+.sectionTitle { text-anchor: start; font-size: 11px; }
+.grid .tick { stroke: lightgrey; opacity: 0.3; shape-rendering: crispEdges; }
+.grid path { stroke-width: 0; }
+.today { fill: none; stroke: red; stroke-width: 2px; }
+.task { stroke-width: 2; }
+.taskText { text-anchor: middle; font-size: 11px; }
+.taskTextOutsideRight { fill: black; text-anchor: start; font-size: 11px; }
+.taskTextOutsideLeft { fill: black; text-anchor: end; font-size: 11px; }
+.taskText0, .taskText1, .taskText2, .taskText3 { fill: white; }
+.task0, .task1, .task2, .task3 { fill: rgb(138, 144, 221); stroke: rgb(83, 79, 188); }
+.taskTextOutside0, .taskTextOutside2 { fill: var(--text-color); }
+.taskTextOutside1, .taskTextOutside3 { fill: var(--text-color); }
+.active0, .active1, .active2, .active3 { fill: rgb(191, 199, 255); stroke: rgb(83, 79, 188); }
+.activeText0, .activeText1, .activeText2, .activeText3 { fill: black !important; }
+.done0, .done1, .done2, .done3 { stroke: grey; fill: lightgrey; stroke-width: 2; }
+.doneText0, .doneText1, .doneText2, .doneText3 { fill: black !important; }
+.crit0, .crit1, .crit2, .crit3 { stroke: rgb(255, 136, 136); fill: red; stroke-width: 2; }
+.activeCrit0, .activeCrit1, .activeCrit2, .activeCrit3 { stroke: rgb(255, 136, 136); fill: rgb(191, 199, 255); stroke-width: 2; }
+.doneCrit0, .doneCrit1, .doneCrit2, .doneCrit3 { stroke: rgb(255, 136, 136); fill: lightgrey; stroke-width: 2; cursor: pointer; shape-rendering: crispEdges; }
+.doneCritText0, .doneCritText1, .doneCritText2, .doneCritText3 { fill: black !important; }
+.activeCritText0, .activeCritText1, .activeCritText2, .activeCritText3 { fill: black !important; }
+.titleText { text-anchor: middle; font-size: 18px; fill: black; }
+.node text { font-size: 14px; }
+div.mermaidTooltip { position: absolute; text-align: center; max-width: 200px; padding: 2px; font-size: 12px; background: rgb(255, 255, 222); border: 1px solid rgb(170, 170, 51); border-radius: 2px; pointer-events: none; z-index: 100; }
+#write .md-diagram-panel .md-diagram-panel-preview div { width: initial; }
+
+
+#write, body { height: auto; }
+#write, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write ol, #write p, #write ul { position: relative; }
+#write, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write, pre { white-space: pre-wrap; }
+.CodeMirror, .md-fences, table { text-align: left; }
+.md-reset, a:active, a:hover { outline: 0px; }
+.md-reset, .md-toc-item a { text-decoration: none; }
+.MathJax_SVG, .md-reset { float: none; direction: ltr; }
+:root { --bg-color:#ffffff; --text-color:#333333; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+a.url { word-break: break-all; }
+.in-text-selection, ::selection { background: rgb(181, 214, 252); text-shadow: none; }
+#write { margin: 0px auto; word-break: normal; word-wrap: break-word; padding-bottom: 70px; overflow-x: visible; }
+.first-line-indent #write p .md-line { text-indent: 0px; }
+.first-line-indent #write li, .first-line-indent #write p, .first-line-indent #write p .md-line:first-child { text-indent: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write > blockquote:first-child, #write > div:first-child, #write > ol:first-child, #write > p:first-child, #write > pre:first-child, #write > table:first-child, #write > ul:first-child { margin-top: 30px; }
+#write li > table:first-child { margin-top: -20px; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+p { -webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; }
+.mathjax-block { margin-top: 0px; margin-bottom: 0px; -webkit-margin-before: 0px; -webkit-margin-after: 0px; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+#write > figure:first-child { margin-top: 16px; }
+figure { overflow-x: auto; margin: -8px 0px 0px -8px; max-width: calc(100% + 16px); padding: 8px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; }
+.CodeMirror-line, .md-fences { break-inside: avoid; }
+table.md-table td { min-width: 80px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; margin-right: 4px; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+.md-fences { font-size: 0.9rem; display: block; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+.md-fences .CodeMirror.CodeMirror-wrap { top: -1.6em; margin-bottom: -1.6em; }
+.md-fences.mock-cm { white-space: pre-wrap; }
+.show-fences-line-number .md-fences { padding-left: 0px; }
+.show-fences-line-number .md-fences.mock-cm { padding-left: 40px; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; vertical-align: top; background: 0px 0px; text-shadow: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; }
+.md-toc-inner, a img, img a { cursor: pointer; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid-page; orphans: 2; }
+  p { orphans: 4; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { white-space: pre-wrap; margin-top: 0.714em; font-size: 0.7em; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > img:only-child { display: block; margin: auto; }
+.md-line > .md-image:only-child, p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+.mathjax-block:not(:empty)::after, .md-toc-content::after, .md-toc::after { display: none; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.mathjax-block { white-space: pre; overflow: hidden; width: 100%; }
+p + .mathjax-block { margin-top: -1.143rem; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.MathJax_SVG, .mathjax-block .MathJax_SVG_Display { text-indent: 0px; max-width: none; max-height: none; min-height: 0px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-inner:hover { }
+.md-toc-inner { display: inline-block; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, tt { font-family: var(--monospace); }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; }
+a.md-print-anchor { border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.mathjax-block .MathJax_SVG_Display { text-align: center; margin: 1em 0px; position: relative; min-width: 100%; width: auto; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: monospace; }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; min-width: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg, [lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+
+
+.CodeMirror, .CodeMirror-sizer { position: relative; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.fences-no-line-wrapping .md-fences .CodeMirror { margin-top: -30px; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; }
+.CodeMirror-lines { padding: 4px 0px; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-scroll, .cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta, .cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error, .cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.CodeMirror { height: auto; overflow: hidden; }
+.CodeMirror-scroll { margin-bottom: -30px; padding-bottom: 30px; height: 100%; outline: 0px; position: relative; box-sizing: content-box; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow-x: hidden; overflow-y: scroll; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow-y: hidden; overflow-x: scroll; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; border-right: none; width: 0px; visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.CodeMirror-selected { background: rgb(217, 217, 217); }
+.CodeMirror-focused .CodeMirror-selected { background: rgb(215, 212, 240); }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+.CodeMirror-lint-markers { width: 16px; }
+.CodeMirror-lint-tooltip { background-color: infobackground; border: 1px solid rgb(0, 0, 0); border-radius: 4px; color: infotext; font-family: var(--monospace); overflow: hidden; padding: 2px 5px; position: fixed; white-space: pre-wrap; z-index: 10000; max-width: 600px; opacity: 0; transition: opacity 0.4s; font-size: 0.8em; }
+.CodeMirror-lint-mark-error, .CodeMirror-lint-mark-warning { background-position: left bottom; background-repeat: repeat-x; }
+.CodeMirror-lint-mark-error { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJDw4cOCW1/KIAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHElEQVQI12NggIL/DAz/GdA5/xkY/qPKMDAwAADLZwf5rvm+LQAAAABJRU5ErkJggg=="); }
+.CodeMirror-lint-marker-error, .CodeMirror-lint-marker-warning { background-position: center center; background-repeat: no-repeat; cursor: pointer; display: inline-block; height: 16px; width: 16px; vertical-align: middle; position: relative; }
+.CodeMirror-lint-message-error, .CodeMirror-lint-message-warning { padding-left: 18px; background-position: left top; background-repeat: no-repeat; }
+.CodeMirror-lint-marker-error, .CodeMirror-lint-message-error { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAHlBMVEW7AAC7AACxAAC7AAC7AAAAAAC4AAC5AAD///+7AAAUdclpAAAABnRSTlMXnORSiwCK0ZKSAAAATUlEQVR42mWPOQ7AQAgDuQLx/z8csYRmPRIFIwRGnosRrpamvkKi0FTIiMASR3hhKW+hAN6/tIWhu9PDWiTGNEkTtIOucA5Oyr9ckPgAWm0GPBog6v4AAAAASUVORK5CYII="); }
+.CodeMirror-lint-marker-warning, .CodeMirror-lint-message-warning { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAANlBMVEX/uwDvrwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD6twD/uwAAAADurwD2tQD7uAD+ugAAAAD/uwDhmeTRAAAADHRSTlMJ8mN1EYcbmiixgACm7WbuAAAAVklEQVR42n3PUQqAIBBFUU1LLc3u/jdbOJoW1P08DA9Gba8+YWJ6gNJoNYIBzAA2chBth5kLmG9YUoG0NHAUwFXwO9LuBQL1giCQb8gC9Oro2vp5rncCIY8L8uEx5ZkAAAAASUVORK5CYII="); }
+.CodeMirror-lint-marker-multiple { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAACVBMVEUAAAAAAAC/v7914kyHAAAAAXRSTlMAQObYZgAAACNJREFUeNo1ioEJAAAIwmz/H90iFFSGJgFMe3gaLZ0od+9/AQZ0ADosbYraAAAAAElFTkSuQmCC"); background-repeat: no-repeat; background-position: right bottom; width: 100%; height: 100%; }
+
+
+:root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: normal; src: local("Open Sans Regular"), url("./github/400.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: italic; font-weight: normal; src: local("Open Sans Italic"), url("./github/400i.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: bold; src: local("Open Sans Bold"), url("./github/700.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: italic; font-weight: bold; src: local("Open Sans Bold Italic"), url("./github/700i.woff") format("woff"); }
+html { font-size: 16px; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
+#write { max-width: 860px; margin: 0px auto; padding: 20px 30px 100px; }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+body > :first-child { margin-top: 0px !important; }
+body > :last-child { margin-bottom: 0px !important; }
+a { color: rgb(65, 131, 196); }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 4px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border-width: 0px 0px 1px; border-style: none none solid; border-top-color: initial; border-right-color: initial; border-left-color: initial; border-image: initial; overflow: hidden; box-sizing: content-box; border-bottom-color: rgb(221, 221, 221); }
+body > h2:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child + h2 { margin-top: 0px; padding-top: 0px; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child { margin-top: 0px; padding-top: 0px; }
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 { margin-top: 0px; padding-top: 0px; }
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p { margin-top: 0px; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 4px solid rgb(221, 221, 221); padding: 0px 15px; color: rgb(119, 119, 119); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border-top: 1px solid rgb(204, 204, 204); margin: 0px; padding: 0px; }
+table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
+table tr th { font-weight: bold; border-width: 1px 1px 0px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204); border-image: initial; border-bottom-style: initial; border-bottom-color: initial; text-align: left; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(204, 204, 204); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); }
+.md-fences, code, tt { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); border-radius: 3px; font-family: Consolas, "Liberation Mono", Courier, monospace; padding: 2px 4px 0px; font-size: 0.9em; }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding: 8px 1em 6px; }
+.md-task-list-item > input { margin-left: -1.3em; }
+@media screen and (min-width: 914px) {
+}
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { word-wrap: break-word; }
+}
+.md-fences { background-color: rgb(248, 248, 248); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border-radius: 3px; font-family: Consolas, "Liberation Mono", Courier, monospace; padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
+.md-tag { color: inherit; }
+.md-toc { margin-top: 20px; padding-bottom: 20px; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+#md-notification::before { top: 10px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
+.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
+.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
+.md-lang { color: rgb(180, 101, 77); }
+.html-for-mac .context-menu { --item-hover-bg-color: #E6F0FE; }
+
+
+
+
+
+ .typora-export p, .typora-export .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><h1><a name='header-n589' class='md-header-anchor '></a>1.初识c语言</h1><hr /><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="n589"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n589">1.初识c语言</a></span><span class="md-toc-item md-toc-h2" data-ref="n593"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n593">1.1 c语言的起源</a></span><span class="md-toc-item md-toc-h2" data-ref="n596"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n596">1.2 选择c语言的理由</a></span><span class="md-toc-item md-toc-h2" data-ref="n615"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n615">1.3 C语言的应用范围</a></span><span class="md-toc-item md-toc-h2" data-ref="n624"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n624">1.4 计算机能做什么</a></span><span class="md-toc-item md-toc-h2" data-ref="n662"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n662">1.5 高级计算机语言和编译器</a></span><span class="md-toc-item md-toc-h2" data-ref="n671"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n671">1.6 语言标准</a></span><span class="md-toc-item md-toc-h2" data-ref="n698"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n698">1.7 使用c语言的七个步骤</a></span><span class="md-toc-item md-toc-h2" data-ref="n728"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n728">1.8 编程机制</a></span><span class="md-toc-item md-toc-h2" data-ref="n759"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n759">1.9 本章小结</a></span><span class="md-toc-item md-toc-h2" data-ref="n766"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n766">1.10 复习题</a></span><span class="md-toc-item md-toc-h2" data-ref="n797"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n797">1.11编程练习</a></span></p></div><h2><a name='header-n593' class='md-header-anchor '></a>1.1 c语言的起源</h2><p>c语言是在B语言的基础上进行设计，由贝尔实验室的丹尼斯-里奇和肯-汤普森（这么厉害的人，有几个程序员可以一口叫出他们的名字）在开发UNIX操作系统时设计了c语言。c语言的设计的初衷是将其作为程序员使用的一种编程工具。</p><h2><a name='header-n596' class='md-header-anchor '></a>1.2 选择c语言的理由</h2><ul><li>C语言编写的程序更易懂、更可靠。C语言融合了计算机科学理论和实践的控制特性，它的设计理念让用户能够轻松完成自顶向下的规划、结构化编程和模块化设计。</li><li>C是高效的语言，更紧凑，运行速度更快。c语言具有汇编语言才具有的微调控制能力，这使得其可以根据情况使程序获得最大的运行速度或者更有效的使用内存。</li><li>C是可移植的语言。这意味着，在一种系统中编写的c程序稍作修改或不做修改就能在其他系统运行。由于C语言和UNIX关系密切，UNIX通常会将c编译器作为软件包的部分。安装Linux时，通常也会安装c编译器。</li><li>C语言功能强大且灵活。例如，功能强大且灵活的UNIX操作系统大部分是用C语言写的；其它语言的许多编译器和解释器都是用c语言编写的。</li><li>C语言是为了满足程序员的需求而设计的，程序员利用C可以访问硬件、操控内存中的位。但这可能会让你犯一些莫名其妙的错误，这些错误不可能在其他语言中出现。</li></ul><p><strong>C语言是自由的语言，赋予了程序员很大的权限，但拥有自由就必须时刻保持警惕。</strong></p><h2><a name='header-n615' class='md-header-anchor '></a>1.3 C语言的应用范围</h2><p>早在20世纪80年代，C语言就已经成为小型计算机（UNIX系统）使用的主流语言。从那以后，C语言的应用范围扩展到微型机（个人计算机）和大型机。无论是软件公司、经验丰富的C程序员，还是其他用户，都能从C语言中受益。</p><p>20世纪90年代，许多软件公司开始改用C++来开发大型的编程项目。c++在C语言的基础上嫁接了面向对象编程工具（面向对象是一门哲学，它通过对语言建模来适应问题，而不是对问题建模以适应语言）。C++几乎是C的超集，这意味着任何C程序差不多就是一个C++程序。学习C语言，也相当于学习了许多c++的知识。</p><p>虽然这些年来C++和Java非常流行，但是c语言仍然是软件业中的核心技能。在最想具备的技能中，C语言通常位居前十。特别是，C语言已成为嵌入式系统编程的流行语言。也就是说，越来越多的汽车、照相机、DVD播放机和其他现代化设备的微处理器都用C语言进行编程。最终，作为开发操作系统的卓越语言，C在Linux开发中扮演着极其重要的角色。</p><p>简而言之，C语言是最重要的编程语言之一。</p><h2><a name='header-n624' class='md-header-anchor '></a>1.4 计算机能做什么</h2><p>在学习如何用C语言编程之前，最好了解一下计算机的工作原理。这些知识有助于你理解C语言编写程序和运行C程序时所发生的事情之间有什么联系。</p><p>现代计算机由许多部件构成：</p><ul><li>中央处理单元（CPU）承担绝大部分运算工作。</li><li>随机存取内存（RAM）是存储程序和文件的工作区。</li><li>永久内存存储设备（过去一般指机械硬盘，现在还包括固态硬盘）即使在计算机关闭后，也不会丢失之前存储的程序和文件。</li><li>还有各种外围设备（如：键盘、鼠标、触摸屏、显示器）提供人与计算机之间的交互。</li></ul><p>CPU负责处理程序，接下来讨论它的工作原理：CPU的工作非常简单，至少从下面简短的描述来看是这样的。</p><ul><li>它从内存中获取并执行一条指令，然后再从内存中获取并执行下一条指令，诸如此类（一个吉赫兹的CPU一秒能重复这样的操作大概十亿次，因此，CPU能以惊人的速度从事枯燥的工作）。</li><li>CPU有自己的小工作区---由若干个寄存器组成，每个寄存器都可以存储一个数字。一个寄存器存储下一条指令的内存地址，CPU使用该地址来获取和更新下一条指令。在获取指令后，CPU在另一个寄存器中存储该指令，并更新第一个寄存器下一条指令的地址。CPU能理解的指令有限（这些指令的集合叫做指令集）。而且，这些指令相当具体，其中的许多指令都是用于请求计算机并一个数字从一个位置移动到另一个位置。例如：从内存移动到寄存器。</li></ul><p>下面介绍两个有趣的知识：</p><ul><li>存储在计算机中的所有内容都是数字。计算机以数字形式存储数字和字符。每个字符都有一个数字码。计算机载入寄存器的指令也以数字形式储存。</li><li>计算机程序最终必须以数字指令码（即，机器语言）来表示。</li></ul><p>简而言之，计算机的工作原理是：如果你希望计算机来做某件事，就必须为其提供特殊的指令列表（程序），确切地告诉计算机要做的事以及如何做。你必须用计算机能直接明白的语言（机器语言）创建程序。</p><h2><a name='header-n662' class='md-header-anchor '></a>1.5 高级计算机语言和编译器</h2><p>高级编程语言（如C）以多种方式简化了编程工作。首先，不必使用数字表示指令；其次，使用的指令更贴近你如何想这个问题，而不是类似计算机那样繁琐的步骤。使用高级编程语言，可以在更抽象的层面表达你的想法，不用考虑CPU在完成任务时具体需要哪些步骤。</p><p>在机器看来，高级指令就是一堆无法理解的无用数据。编译器在这里派上了用场。编译器是把高级语言翻译成计算机能理解的机器语言指令集的的程序。程序员进行高级思维活动，而编译器则负责处理冗长乏味的细节工作。</p><p>编译器还有一个优势。一般而言，不同CPU制造商使用的指令系统和编码格式不同。例如，用i7CPU编写的机器语言程序对于ARM A57CPU而言什么都不是。但是，可以找到与特定类型CPU匹配的编译器。因此，使用合适的编译器或编译器集，便可以把一种高级语言程序转换成供不同类型CPU使用的机器语言程序。一旦解决了一个变成问题，便可以让编译器集翻译成不同CPU使用的机器语言。</p><p>简而言之，高级语言以更抽象的方式描述行为，不受限于特定于CPU或指令集。而且，高级语言简单易学，用高级语言编程比用机器语言编程容易很多。</p><h2><a name='header-n671' class='md-header-anchor '></a>1.6 语言标准</h2><p>C语言发展之初，并没有所谓的c标准。与大多数语言不同的是，C语言比其他语言更依赖库，因此需要一个标准库。实际上，由于缺乏官方标准，UNIX实现提供的库已成为了标准库。</p><p>随着C的不断发展，越来越多的应用于更多的系统中，C社区意识到需要一个更全面的、更新颖、更严格的标准。最终有了ANSI（美国国家标准协会） C。（或称c89、c90）</p><p>其强调以下精神：</p><ul><li>信任程序员</li><li>不要妨碍程序员做需要做的事</li><li>保持语言精练简单</li><li>只提供一种方法执行一项操作</li><li>让程序运行更快，即使不能保证其可移植性</li></ul><p>1994年。ANSI、ISO联合委员会（C9X委员会）开始修订C标准，最终发布C99标准。</p><p>2011年发布C11标准。</p><h2><a name='header-n698' class='md-header-anchor '></a>1.7 使用c语言的七个步骤</h2><p>C是编译型语言（还有解释性语言和面向图形界面语言）。</p><p>我们把C程序开发过程分为7个步骤。注意这是理想状态，在实际的使用过程中，尤其是在较大型的项目中，可能需要做一些重复的工作，根据下一步骤的情况来调整或改进上一个步骤。</p><ul><li>定义程序的目标：在动手写程序之前，要有一个清晰的思路。想要程序去做什么首先自己要明确自己想做什么，思考你的程序需要哪些信息，要进行哪些计算和控制，以及程序应该要报告什么信息。在这一步，应该用一般术语来描述问题。</li><li>设计程序：对程序要完成什么任务有概念性认识后，就应该考虑如何来完成它。例如，用户界面应该是怎样的？如何组织程序？目标用户是谁？准备花多长时间来完成这个程序？此外，还要决定在程序中如何表示数据，以及用什么方法处理数据。应该用一般术语描述问题，而不是用具体的代码。但是，你的某些决策坑你取决于语言的特性。</li><li>编写代码：把你设计的程序翻译成c语言。这个过程的机制取决于编程环境。使用文本编辑器编写代码，添加注释等。</li><li>编译：接下来就是编译代码，编译的细节取决于编程的环境。编译器是把源代码转换成可执行的程序。可执行的程序是用计算机的机器语言表示的代码。这种语言由数字码表示的指令组成。如前所述，不同的计算机使用不同的机器语言方案。C编译器负责把C代码翻译成特定的机器语言。此外，C编译器还将源代码与C库的代码合并成最终的程序（更准确的说，应该是由一个被称为链接器的程序来链接库函数，但是在大多数系统中，编译器运行链接器）。其结果是，生成一个用户可以运行的可执行文件，其中包含着计算机能理解的代码。编译器还会检查C语言是否有效。如果发现错误就不生成可执行文件并报错。理解特定编译器报告的错误或警告信息是程序员要掌握的另一项技能。</li><li>运行程序：传统上，可执行文件是可运行的程序。在常见环境中运行程序需要可执行文件的文件名，而其他环境可能要执行命令或一些其他机制。</li><li>测试和调试代码：程序能运行是个好迹象，但有时也可能会出现运行错误。接下来，应该检查程序是否按照你所设计的思路运行。你会发现你的程序中有一些错误，计算机的行话叫作bug。查找并修复程序错误的过程叫调试。</li><li>维护和修改程序：创建完程序后，你发现程序有错，或者想扩展程序的用途，这时就要修改程序。如果在编写程序时清楚地做了注释并采用了合理的设计方案，这些事情都很简单。</li><li>说明：编程并非像描述那样是一个线性的过程。有时，要在不同的步骤之间往复。例如，在写代码时发现之前的设计不切实际，或者想到了一个更好的解决方案，或者等程序运行后，想改变原来的设计思路。对程序做文字注释为今后的修改提供了方便。应该养成先规划再动手编写代码的好习惯，用纸和笔记录下程序的目标和设计框架。</li></ul><h2><a name='header-n728' class='md-header-anchor '></a>1.8 编程机制</h2><p>生成程序的具体过程因计算机环境而异。C是可移植性语言，因此可以在许多环境中使用，包括UNIX，Linux，MS-DOS、Windows和Macintosh OS。用C语言编写程序时，编写的内容被存储在文本文件中，该文件被称为源代码。大部分C系统，包括之前提到的，都要求文件名以.c结尾。在文件名中，点号（.)前面的部分称为基本名（basename），点号后面的部分称为扩展名（extension）。因此budget是基本名，c是扩展名。基本名和扩展名的组合（budget.c）就是文件名。文件名应该满足特定计算机操作系统的特殊要求。</p><p>C编程的基本策略是，用程序把源代码文件转换为可执行文件（其中包含可直接运行的机器语言代码）。典型的C实现通过编译和链接这两个步骤来完成这一过程。编译器把源代码转换成中间代码，链接器把中间代码和其他代码合并，生成可执行文件。C使用这种分而治之的方法方便对程序进行模块化，可以独立编译单独的模块，稍后再用链接器合并已编译的模块。通过这种方式，如果只更改某个模块，不必因此重新编译其他模块。另外，链接器还将你编写的程序和预编译的库代码合并。</p><p>中间文件有多种形式。我们在这里描述的是最普遍的一种形式，即把源代码转换为机器语言代码，并把结果放在目标代码文件中。虽然目标文件中包含机器语言代码，但是并不能直接运行该文件。因为目标文件中存储的是编译器翻译的源代码，这还不是一个完整的程序。</p><p>目标代码缺失启动代码。启动代码充当着程序和操作系统之间的接口。例如，可以在MS Windows或Linux系统下运行IBM PC兼容机。这两种情况所使用的硬件相同，所以目标代码相同，但是Windows和Linux所需的启动代码不同，因为这些系统处理程序的方式不同。</p><p>目标代码还缺少库函数。几乎所有的C程序都要使用C标准库中的函数。</p><p>链接器的作用是，把你编写的目标代码、系统的标准启动代码和库代码这三部分合并成一个文件，即可执行文件。对于库代码，链接器只会把程序中要用到的库函数代码提取出来。</p><p>简而言之，目标文件和可执行文件都由机器语言指令组成的。然而，目标文件中只包含编译器为你编写的代码翻译的机器语言代码，可执行文件中还包含你编写的程序中使用的库函数和启动代码的机器代码。</p><p><strong>UNIX系统</strong>：输入源代码--文本编辑器--源代码--编译器--可执行代码--输入文件名运行该程序。</p><p>GUN编译器集合和LLVM项目：GUN项目始于1987年，是一个开发大量免费UNIX软件的集合（GUN的意思是“GUN‘s Not UNIX&quot;）。GUN编译器集合（也被成为GCC，其中包含GCC C编译器）是该项目的产品之一。GCC有各个版本的以适应不同的硬件平台和操作系统，包括UNXI、Linux和Windows。用gc命令便可调用GCC C编译器。许多使用gcc的系统都用cc作为gcc的别名。</p><p>LLVM项目成为cc的另一个替代品。该项目是与编译器相关的开源软件集合，始于伊利诺伊大学的2000份研究项目。它的Clang编译器处理C代码，可以通过clang调用。有许多版本供不同的平台使用，包括Linux。</p><p><strong>Linux系统</strong>：Linux系统是一个开源、流行、类似于UNIX的操作系统，可在不同平台（包括PC和Mac）上运行。</p><p><strong>PC的命令行编译器</strong>：C编译器不是标准Windows软件包的一部分，因此需要从别处获取并安装C编译器。可以在互联网上免费下载Cygwin和MinGW，这样可以在PC上通过命令行使用GCC编译器。Cygwin在自己的视窗运行，模仿Linux命令行环境，有一行命令提示。MinGW在Windows的命令提示模式中运行。</p><p><strong>集成开发环境（Windows）</strong>：许多供应商都提供Windows下的集成开发环境，或称为IDE，大多数IDE都是c和c++集合的编译器。通常，Windows IDE既可处理C也可处理C++，因此要制定待处理的程序是C还是c++。有的依靠项目类型区分，有些产品则靠文件扩展名来区分。微软鼓励程序员从C转向c++和c#。</p><p><strong>Windows/Linux</strong>：许多Linux发行版都可以安装在Windows系统中，以创建双系统。一些存储器会为Linux预留空间，以便可以启动Windows或Linux。可以在Windows系统中运行Linux程序，或在Linux系统中运行Windows程序。不能通过Windows系统访问Linux文件，但是可以通过系统访问Windows文档。</p><p><strong>Macintosh中的C</strong>：目前，苹果免费提供Xcode开发系统下载。它允许用户选择不同的编程语言，包括C语言。Xcode凭借可处理多种编程语言的能力，可用于多平台，开发超大型项目。UNIX系统内置Mac OS X，终端工具打开的窗口是让用户在UNIX命令行环境中运行程序。</p><h2><a name='header-n759' class='md-header-anchor '></a>1.9 本章小结</h2><p>C是强大而简洁的编程语言。它之所以流行，在于自身提供大量的的实用编程工具，能很好地控制硬件。而且，与大多数其他程序相比，C程序更容易从一个系统移植到另一个系统。</p><p>C是编译型语言。C编译器和链接器是把C语言源代码转换成可执行代码的程序。</p><p>用C语言编写程序可能费力、困难，让你感到沮丧，但是它也可以激发你的兴趣，让你兴奋、满意。</p><h2><a name='header-n766' class='md-header-anchor '></a>1.10 复习题</h2><ul><li>1.对编程而言，可移植性意味着什么？</li></ul><p>可移植性代表源代码无需修改或只需要做很少的修改就能在不同的计算机中进行编译并运行。</p><ul><li>2.解释型代码文件、目标代码文件和可执行文件有什么区别？</li></ul><p>源代码文件包含程序员使用任何编程语言编写的代码；目标代码文件包括机器语言代码，它不必是完整的程序代码文件；可执行文件包含组成可执行文件程序的完整机器语言代码。</p><ul><li>3.编程的7个主要步骤是什么？</li></ul><p>定义程序的目标---设计程序---编写代码---编译程序---运行程序---测试和调试程序---维护和修改程序。</p><ul><li>4.编译器的任务时什么？</li></ul><p>编译器把源代码翻译成等价的机器语言代码。</p><ul><li>5.链接器的任务时什么？ </li></ul><p>链接器把编译器翻译好的源代码以及库文件和启动代码组合起来，生成一个可执行程序。</p><h2><a name='header-n797' class='md-header-anchor '></a>1.11编程练习</h2><p>写一个将英寸单位转换为厘米单位的程序（1英寸=2.54厘米）。该程序要提示用户输入英寸值。完成编程过程的前两步。</p><p>定义程序的目标：提示用户输入英寸值，然后将输入的值转换为厘米单位。</p><p>设计程序：</p><div class="md-diagram-panel"><svg id="mermaidChart3" width="1564.421875" xmlns="http://www.w3.org/2000/svg" height="381.03125" viewBox="0 0 1564.421875 381.03125" style="height: auto; max-width: 100%;"><style></style><style>#mermaidChart3 {
+    color: rgb(51, 51, 51);
+    font: normal normal normal normal 14.4px / 23.04px Consolas, "Liberation Mono", Courier, monospace;
+  }</style><g transform="translate(32, 32)"><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M68.8125,158.515625L93.8125,158.515625L118.8125,158.515625" marker-end="url(#arrowhead141)" style="fill:none"></path><defs><marker id="arrowhead141" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M268.421875,158.515625L293.421875,158.515625L318.421875,158.515625" marker-end="url(#arrowhead142)" style="fill:none"></path><defs><marker id="arrowhead142" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M424.828125,158.515625L449.828125,158.515625L474.828125,158.515625" marker-end="url(#arrowhead143)" style="fill:none"></path><defs><marker id="arrowhead143" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M610.03125,158.515625L635.03125,158.515625L660.53125,159.015625" marker-end="url(#arrowhead144)" style="fill:none"></path><defs><marker id="arrowhead144" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M908.8621936573139,130.31531865731392L976.46875,112.015625L1134.9375,112.015625L1279,112.015625L1304,112.015625" marker-end="url(#arrowhead145)" style="fill:none"></path><defs><marker id="arrowhead145" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M1381.609375,112.015625L1406.609375,112.015625L1433.171875,137.015625" marker-end="url(#arrowhead146)" style="fill:none"></path><defs><marker id="arrowhead146" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M908.8621936573139,187.71593134268608L976.46875,205.015625L1015.875,205.015625" marker-end="url(#arrowhead147)" style="fill:none"></path><defs><marker id="arrowhead147" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M1254,205.015625L1279,205.015625L1304,205.015625" marker-end="url(#arrowhead148)" style="fill:none"></path><defs><marker id="arrowhead148" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M1381.609375,205.015625L1406.609375,205.015625L1433.171875,180.015625" marker-end="url(#arrowhead149)" style="fill:none"></path><defs><marker id="arrowhead149" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(1134.9375,112.015625)" style="opacity: 1;"><g transform="translate(-21.6015625,-11.5)" class="label"><foreignObject width="43.203125" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">不规范</span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(976.46875,205.015625)" style="opacity: 1;"><g transform="translate(-14.40625,-11.5)" class="label"><foreignObject width="28.8125" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">规范</span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node" id="A" transform="translate(44.40625,158.515625)" style="opacity: 1;"><rect rx="5" ry="5" x="-24.40625" y="-21.5" width="48.8125" height="43"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-14.40625,-11.5)"><foreignObject width="28.8125" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">开始</div></foreignObject></g></g></g><g class="node" id="B" transform="translate(193.6171875,158.515625)" style="opacity: 1;"><rect rx="0" ry="0" x="-74.8046875" y="-21.5" width="149.609375" height="43"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-64.8046875,-11.5)"><foreignObject width="129.609375" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">提示用户输入英寸值</div></foreignObject></g></g></g><g class="node" id="C" transform="translate(371.625,158.515625)" style="opacity: 1;"><rect rx="0" ry="0" x="-53.203125" y="-21.5" width="106.40625" height="43"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-43.203125,-11.5)"><foreignObject width="86.40625" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">等待用户输入</div></foreignObject></g></g></g><g class="node" id="D" transform="translate(542.4296875,158.515625)" style="opacity: 1;"><rect rx="0" ry="0" x="-67.6015625" y="-21.5" width="135.203125" height="43"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-57.6015625,-11.5)"><foreignObject width="115.203125" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">获取用户输入的值</div></foreignObject></g></g></g><g class="node" id="E" transform="translate(798.546875,158.515625)" style="opacity: 1;"><polygon points="138.515625,0 277.03125,-138.515625 138.515625,-277.03125 0,-138.515625" rx="5" ry="5" transform="translate(-138.515625,138.515625)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-122.40625,-11.5)"><foreignObject width="244.8125" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">判断用户输入的值是否符合英寸值规范</div></foreignObject></g></g></g><g class="node" id="F" transform="translate(1342.8046875,112.015625)" style="opacity: 1;"><rect rx="0" ry="0" x="-38.8046875" y="-21.5" width="77.609375" height="43"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-28.8046875,-11.5)"><foreignObject width="57.609375" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">抛出异常</div></foreignObject></g></g></g><g class="node" id="I" transform="translate(1456.015625,158.515625)" style="opacity: 1;"><rect rx="5" ry="5" x="-24.40625" y="-21.5" width="48.8125" height="43"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-14.40625,-11.5)"><foreignObject width="28.8125" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">结束</div></foreignObject></g></g></g><g class="node" id="G" transform="translate(1134.9375,205.015625)" style="opacity: 1;"><rect rx="0" ry="0" x="-119.0625" y="-21.5" width="238.125" height="43"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-109.0625,-11.5)"><foreignObject width="218.125" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">调用算法进行计算 y = 2.54 * x</div></foreignObject></g></g></g><g class="node" id="H" transform="translate(1342.8046875,205.015625)" style="opacity: 1;"><rect rx="0" ry="0" x="-38.8046875" y="-21.5" width="77.609375" height="43"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-28.8046875,-11.5)"><foreignObject width="57.609375" height="23"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">返回结果</div></foreignObject></g></g></g></g></g></g></svg></div><p>&nbsp;</p></div>
+</body>
+</html>
