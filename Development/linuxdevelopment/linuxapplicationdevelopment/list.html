@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>1.Linux简介</title><link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}#write, body { height: auto; }
+<title>list</title><link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}#write, body { height: auto; }
 #write, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write ol, #write p, #write ul { position: relative; }
 #write, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
 #write, pre { white-space: pre-wrap; }
@@ -224,11 +224,6 @@ header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Aria
 </style>
 </head>
 <body class='typora-export os-windows' >
-<div  id='write'  class = 'is-node'><h1><a name='header-n0' class='md-header-anchor '></a>1.Linux简介</h1><hr /><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="n0"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n0">1.Linux简介</a></span><span class="md-toc-item md-toc-h2" data-ref="n4"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n4">1.Linux简单介绍</a></span><span class="md-toc-item md-toc-h2" data-ref="n12"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n12">2.目的</a></span><span class="md-toc-item md-toc-h2" data-ref="n26"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n26">3.最后</a></span></p></div><h2><a name='header-n4' class='md-header-anchor '></a>1.Linux简单介绍</h2><p>Linux英文解释为Linux is not Unix。
-Linux内核最初只是由芬兰人李纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时出于个人爱好而编写的。
-Linux是一套免费使用和自由传播的类Unix操作系统，是一个基于POSIX和UNIX的多用户、多任务、支持多线程和多CPU的操作系统。
-Linux能运行主要的UNIX工具软件、应用程序和网络协议。它支持32位和64位硬件。Linux继承了Unix以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。</p><p>以上内容来自网络。</p><h2><a name='header-n12' class='md-header-anchor '></a>2.目的</h2><ul><li>Linux应用开发与调试</li><li>网络协议分析</li><li>基于Linux的高并发网络服务器的设计及开发（telent\ftp\web\流媒体服务器）</li><li>Linux驱动开发及内核研究</li><li>Linux网络安全及黑客技术研究</li><li>openwrt系统研究与应用开发</li><li>Android系统研究、中间件开发和基本的应用开发</li></ul><h2><a name='header-n26' class='md-header-anchor '></a>3.最后</h2><p>Linux的重要性不言而喻，服务器、Android、大数据、嵌入式开发等等火热的技术都和Linux息息相关。我将在后续总结我所学习到的Linux技术，主要使用c、c++、Python、Makefile、shell等，进行高并发网络程序及功能性服务器开发、Linux内核、Linux驱动开发及网络安全等技术的学习总结。
-使用Linux那种黑客既视感也是让人欲罢不能的。</p><p>Linux是面向程序员的系统。</p><p>以下来自钢铁侠2：
-<img src='./images/stk_linux.gif' alt='stk_linux' referrerPolicy='no-referrer' /></p></div>
+<div  id='write'  class = 'is-node'><h1><a name='header-n25' class='md-header-anchor '></a>Linux应用开发大纲</h1><hr /><p>本总结从此刻2018.7.10开始，同步进行其它内容的总结。</p><p>这里主要讲述Linux的应用开发，主要针对嵌入式linux开发，包括文件的基本操作、目录文件的基本操作、字符设备和状态设备的使用、串口通信、串口的使用、进程的创建与退出、linux守护进程、进程间通信（无名管道、有名管道、标准流管道、共享内存、消息队列、信号）、多线程、线程互斥、互斥锁（互斥锁、条件变量、读写锁）、信号量、socket通信、tcpudp套接字编程、简单的多路复用应用（这里只总结select，其它的poll和epoll在高并发服务器开发中进行总结）、简单web开发说明（HTML、CSS以及CGI、LAMP等都在各自的总结中详细说明）、图形界面开发简单说明（Qt5、安卓都在各自的总结中进行）。</p><p>前期会进行linux的简述、开发环境、编辑器、编译器、调试器进行简单的介绍和总结。</p><p>这里主要开展大体的讲述，一些具体的东西在各自的分类中还会有更细致的总结。</p><p><a href='./1.Linux%E7%AE%80%E4%BB%8B.html'>1.linux简介</a></p><p><a href='../ubuntu/VMware%E5%AE%89%E8%A3%85Ubuntu%E5%8F%8AVMware%20Tools%E5%AE%9E%E7%94%A8%E6%80%BB%E7%BB%93.html'>2.虚拟机VMware安装Ubuntu16.04及VMware Tools</a></p><p><a href='../../../developmentTool/sourceinsight/%E5%85%B3%E4%BA%8Esource%20insight.html'>3.source insight安装、插件配置及打包资源提供</a></p><p><a href='../../../developmentTool/sourceinsight/AboutConfigSourceInsight4.0.html'>4.关于source insight的配置的持续性更新</a></p><p><a href='../../../developmentTool/vim/%E5%B0%86vim%E6%89%93%E9%80%A0%E6%88%90IDE%E6%80%BB%E7%BB%93(%E4%B8%80).html'>5.将vim打造成IDE总结（一）</a></p><p><a href='../../../developmentTool/vim/%E5%B0%86vim%E6%89%93%E9%80%A0%E6%88%90IDE%E6%80%BB%E7%BB%93(%E4%BA%8C).html'>6.将vim打造成IDE总结（二）</a></p><p><a href='./gcc/gccsketch.html'>7.GCC用法简述</a></p></div>
 </body>
 </html>
