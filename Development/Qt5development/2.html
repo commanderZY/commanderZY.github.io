@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qt5-Qt Creator进行多窗口编程</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1><a id="Qt5Qt_Creator_0"></a>Qt5-Qt Creator进行多窗口编程</h1>
+<hr>
+<h2><a id="_3"></a>版本</h2>
+
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>作者</th>
+<th>时间</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>loon</td>
+<td>2018.10.23</td>
+<td>初稿</td>
+</tr>
+</tbody>
+</table><h2><a id="_8"></a>目录</h2>
+<p></p><div class="toc"><h3>文章目录</h3><ul><li><a href="#Qt5Qt_Creator_0">Qt5-Qt Creator进行多窗口编程</a></li><ul><li><a href="#_3">版本</a></li><li><a href="#_8">目录</a></li><li><a href="#_10">一、前言</a></li><li><a href="#Qt_15">二、Qt多窗口编程</a></li><ul><li><a href="#1_16">1、示例思路</a></li><li><a href="#2_30">2、示例预期结果</a></li><li><a href="#3_34">3、示例代码</a></li><li><a href="#4_136">4、最后</a></li></ul></ul></ul></div><p></p>
+<h2><a id="_10"></a>一、前言</h2>
+<p>最近要利用Qt进行上位机配置软件的开发，但是发现自己虽然做了一些基于Qt的PC软件开发，但是一直没有系统性的总结和学习过Qt，这样下去，积累的经验和知识随着时间推移又会丢失，所以趁着这段时间边学边总结一下。</p>
+<p>以下总结基于Qt5.6.0，采用Qt creator进行开发。</p>
+<h2><a id="Qt_15"></a>二、Qt多窗口编程</h2>
+<h3><a id="1_16"></a>1、示例思路</h3>
+<p>New Project(新工程)–&gt;选择application（应用程序）–&gt;选择默认的Qt widgets application(窗口小部件应用程序)–&gt;选择工程路径和工程名–&gt;基类选择QWidget即可，暂时不使用版本管理工具，然后直接完成即可。</p>
+<p>然后鼠标右击工程文件夹，选择添加新文件，然后选择Qt–&gt;Qt设计师界面类–&gt;Dialog without Buttons(不要按钮的会话框)–&gt;类名设置为myDlg，然后下一步病点击完成即可调到mydlg.ui界面中。<br>
+<img src="https://img-blog.csdn.net/20181023213808963?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTUxMDgxMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></p>
+<p>鼠标拖入一个Push Button，然后双击修改其文本为“进入主窗口”，在右侧修改其objectName为enterBtn。</p>
+<p>然后在下面的signal &amp; Slots Editor中“+”一个信号和槽，并将其关联，关联我们刚刚创建的enterBtn的clicked信号给myDlg，这样当我们点击该button时将信号发送给mydlg，然后mydlg退出进入主窗口。<br>
+<img src="https://img-blog.csdn.net/20181023213914723?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTUxMDgxMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></p>
+<p>主窗口也拖入一个push button，键入文本“弹出一个对话框”，然后右键push button选择转到槽，在该槽函数中显示一个新创建的dlg，该dlg和之前的dlg一样，也有一个“进入主窗口”的button，这样点击后本次dlg退出，然后显示主窗口，主窗口点击“弹出一个对话框”，如此周而复始。。。<br>
+<img src="https://img-blog.csdn.net/20181023222715137?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTUxMDgxMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></p>
+<h3><a id="2_30"></a>2、示例预期结果</h3>
+<p>!](<a href="https://img-blog.csdn.net/20181023221307818?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTUxMDgxMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">https://img-blog.csdn.net/20181023221307818?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTUxMDgxMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70</a>)</p>
+<h3><a id="3_34"></a>3、示例代码</h3>
+<p>mydlg.h:</p>
+<pre><code class="prism language-cpp"><span class="token macro property">#<span class="token directive keyword">ifndef</span> MYDLG_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MYDLG_H</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QDialog&gt;</span></span>
+
+<span class="token keyword">namespace</span> Ui <span class="token punctuation">{</span>
+<span class="token keyword">class</span> <span class="token class-name">myDlg</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">myDlg</span> <span class="token operator">:</span> <span class="token keyword">public</span> QDialog
+<span class="token punctuation">{</span>
+    Q_OBJECT
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">explicit</span> <span class="token function">myDlg</span><span class="token punctuation">(</span>QWidget <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">~</span><span class="token function">myDlg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    Ui<span class="token operator">::</span>myDlg <span class="token operator">*</span>ui<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">endif</span> </span><span class="token comment">// MYDLG_H</span>
+</code></pre>
+<p>widget.h:</p>
+<pre><code class="prism language-cpp"><span class="token macro property">#<span class="token directive keyword">ifndef</span> WIDGET_H</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> WIDGET_H</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QWidget&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"mydlg.h"</span></span>
+
+<span class="token keyword">namespace</span> Ui <span class="token punctuation">{</span>
+<span class="token keyword">class</span> <span class="token class-name">Widget</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Widget</span> <span class="token operator">:</span> <span class="token keyword">public</span> QWidget
+<span class="token punctuation">{</span>
+    Q_OBJECT
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">explicit</span> <span class="token function">Widget</span><span class="token punctuation">(</span>QWidget <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">~</span><span class="token function">Widget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span> slots<span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">on_pushButton_clicked</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    Ui<span class="token operator">::</span>Widget <span class="token operator">*</span>ui<span class="token punctuation">;</span>
+    myDlg myD2<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">endif</span> </span><span class="token comment">// WIDGET_H</span>
+
+</code></pre>
+<p>main.cpp:</p>
+<pre><code class="prism language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"widget.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;QApplication&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"mydlg.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    QApplication <span class="token function">a</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Widget w<span class="token punctuation">;</span>
+    myDlg myD<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>myD<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> QDialog<span class="token operator">::</span>Accepted<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        w<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> a<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>widget.cpp:</p>
+<pre><code class="prism language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"widget.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ui_widget.h"</span></span>
+
+Widget<span class="token operator">::</span><span class="token function">Widget</span><span class="token punctuation">(</span>QWidget <span class="token operator">*</span>parent<span class="token punctuation">)</span> <span class="token operator">:</span>
+    <span class="token function">QWidget</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">ui</span><span class="token punctuation">(</span><span class="token keyword">new</span> Ui<span class="token operator">::</span>Widget<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    ui<span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">setupUi</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+Widget<span class="token operator">::</span><span class="token operator">~</span><span class="token function">Widget</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">delete</span> ui<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> Widget<span class="token operator">::</span><span class="token function">on_pushButton_clicked</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    myD2<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<h3><a id="4_136"></a>4、最后</h3>
+<p>main.cpp中创建的dlg是激活进入主窗口的，后续的dlg则是由由于点击了主窗口中的push button而创建的，每次进入主窗口后dialog都会退出，这个循环的过程务必想清楚。</p>
+</div>
+</body>
+
+</html>
