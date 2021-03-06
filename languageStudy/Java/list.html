@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>java从入门到实战总结</title>
+    <style>
+        .userMenu {
+            float: left;
+            width: 200px;
+            padding-top: 50px;
+
+        }
+
+        #content {
+            float: left;
+        }
+    </style>
+    <meta charset="utf-8">
+    <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+</head>
+<body>
+    <div class="userWrap">
+        <ul class="userMenu">
+            <li class="current" data-id="1.1"><a>1.1、Java基础之环境搭建和eclipse安装</a></li>
+            <li data-id="1.2"><a>1.2、Java基础语法</a></li>
+        </ul>
+        <div id="content"></div>
+    </div>
+
+    <script>
+        $(function() {
+            $(".userMenu").on("click", "li", function() {
+                var sId = $(this).data("id"); //获取data-id的值
+                window.location.hash = sId; //设置锚点
+                loadInner(sId);
+            });
+
+            function loadInner(sId) {
+                var sId = window.location.hash;
+                var pathn, i;
+                switch(sId) {
+                    case "#1.1":
+                        pathn = "java_1.1.html";
+                        i = 0;
+                        break;
+                    case "#1.2":
+                        pathn = "java_1.2.html";
+                        i = 1;
+                        break;
+                    default:
+                        pathn = "java_1.1.html";
+                        i = 0;
+                        break;
+                }
+                $("#content").load(pathn); //加载相对应的内容
+                $(".userMenu li").eq(i).addClass("current").siblings().removeClass("current"); //当前列表高亮
+            }
+            var sId = window.location.hash;
+            loadInner(sId);
+        });
+    </script>
+</body>
+</html>
